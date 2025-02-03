@@ -14,10 +14,21 @@ public class FileOperations implements Operations {
     File fichero;
     String path = "ficheros_crud\\src\\main\\resources\\empleados.txt";
 
+    /**
+     * Constructor de la clase
+     */
+    public FileOperations(){
+        this.fichero = new File(path);
+        if (!fichero.exists() || this.fichero.isFile()) {
+            throw new IllegalArgumentException("El recurso no es de tipo fichero " + this.path + ".");
+        }
+    }
+    
     @Override
     public boolean create(Empleado empleado) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        if (empleado != null || empleado.getIdentificador() != null) {
+        }
+        return false;
     }
 
     @Override
