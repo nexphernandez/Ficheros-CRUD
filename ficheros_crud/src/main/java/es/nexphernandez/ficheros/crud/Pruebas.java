@@ -1,11 +1,14 @@
 package es.nexphernandez.ficheros.crud;
-
+/**
+ * @author nexphernandez
+ * @version 1.0.0
+ */
 import es.nexphernandez.ficheros.crud.model.Empleado;
 import es.nexphernandez.ficheros.crud.model.file.FileOperations;
 
-public class Main {
+public class Pruebas {
     public static void main(String[] args) {
-        Empleado empleado = new Empleado("1", "Nico", "Director", 50000,"13/10/1994");
+        Empleado empleado = new Empleado("1", "Harby", "Director", 50000,"13/10/1994");
         System.out.println(empleado);
         System.out.println(empleado.getEdad(empleado.getFechaDeNacimiento()));
 

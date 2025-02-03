@@ -20,7 +20,7 @@ import es.nexphernandez.ficheros.crud.model.Empleado;
 
 public class FileOperations implements Operations {
     File fichero;
-    String path = "C:\\Users\\Alexa\\Desktop\\Ficheros-CRUD\\ficheros_crud\\src\\main\\resources\\empleados.txt";
+    String path = "ficheros_crud\\src\\main\\resources\\empleados.txt";
 
     /**
      * Constructor de la clase
@@ -129,17 +129,23 @@ public class FileOperations implements Operations {
             return false;
         }
         Set<Empleado> empleados = read(fichero);
-        if (!empleados.contains(empleado)) {
-            return false;
-        }
-        for (Empleado empleadoABuscar : empleados) {
-            if (empleadoABuscar.equals(empleado)) {
-                empleados.remove(empleadoABuscar);
-                empleados.add(empleado);
-                return updateFile(empleados, fichero);
+        boolean encontrado = false;
+        Set<Empleado> actualizados = new HashSet<>();
+
+        for (Empleado emp : empleados) {
+            if (emp.equals(empleado)) {
+                actualizados.add(empleado);
+                encontrado = true;
+            } else {
+                actualizados.add(emp);
             }
         }
-        return true;
+
+        if (!encontrado) {
+            return false;
+        }
+
+        return updateFile(actualizados, fichero);
     }
 
     /**
@@ -183,7 +189,7 @@ public class FileOperations implements Operations {
                 return updateFile(empleados, fichero);
             }
         }
-        return true;
+        return false;
     }
 
     /**
@@ -217,14 +223,14 @@ public class FileOperations implements Operations {
         if (fechaInicio == null || fechaInicio.isEmpty() || fechaFin == null || fechaFin.isEmpty()) {
             return new HashSet<>();
         }
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate inicio = LocalDate.parse(fechaInicio,formato);
         LocalDate fin = LocalDate.parse(fechaFin, formato);
         Set<Empleado> empleados = read(fichero);
         Set<Empleado> porEdad = new HashSet<>();
         for (Empleado empleado : empleados) {
             LocalDate cumpleanio = LocalDate.parse(empleado.getFechaDeNacimiento(),formato);
-            if (cumpleanio.isAfter(inicio) ) {
+            if ((cumpleanio.equals(inicio) || cumpleanio.isAfter(inicio)) && cumpleanio.isBefore(fin) ) {
                 porEdad.add(empleado);
             }
         }

@@ -90,7 +90,7 @@ public class Empleado {
      */
     public int getEdad(String fechaNacimiento){
         LocalDate localDate = LocalDate.now();
-        String[] arrayFechaNacimiento = fechaNacimiento.split(",");
+        String[] arrayFechaNacimiento = fechaNacimiento.split("/");
         int anio = Integer.parseInt(arrayFechaNacimiento[2]);
         int mes = Integer.parseInt(arrayFechaNacimiento[1]);
         int dias = Integer.parseInt(arrayFechaNacimiento[0]);
