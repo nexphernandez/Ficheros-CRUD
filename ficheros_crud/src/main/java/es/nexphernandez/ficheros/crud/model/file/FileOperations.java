@@ -20,7 +20,7 @@ import es.nexphernandez.ficheros.crud.model.Empleado;
 
 public class FileOperations implements Operations {
     File fichero;
-    String path = "ficheros_crud\\src\\main\\resources\\empleados.txt";
+    String path = "/home/dam/Documentos/Ficheros-CRUD/ficheros_crud/src/main/resources/empleados.txt";
 
     /**
      * Constructor de la clase
@@ -180,16 +180,11 @@ public class FileOperations implements Operations {
         }
         Empleado empleado = new Empleado(identificador);
         Set<Empleado> empleados = read(fichero);
-        if (empleados.contains(empleado)) {
+        if (!empleados.contains(empleado)) {
             return false;
         }
-        for (Empleado empleadoDelete : empleados) {
-            if (empleadoDelete.equals(empleado)) {
-                empleados.remove(empleadoDelete);
-                return updateFile(empleados, fichero);
-            }
-        }
-        return false;
+        empleados.remove(empleado);
+        return updateFile(empleados, fichero);
     }
 
     /**
@@ -229,7 +224,7 @@ public class FileOperations implements Operations {
         Set<Empleado> empleados = read(fichero);
         Set<Empleado> porEdad = new HashSet<>();
         for (Empleado empleado : empleados) {
-            LocalDate cumpleanio = LocalDate.parse(empleado.getFechaDeNacimiento(),formato);
+            LocalDate cumpleanio = LocalDate.parse(empleado.getFechaDeNacimiento().trim(),formato);
             if ((cumpleanio.equals(inicio) || cumpleanio.isAfter(inicio)) && cumpleanio.isBefore(fin) ) {
                 porEdad.add(empleado);
             }
